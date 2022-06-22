@@ -5,12 +5,14 @@ import { AppService } from './app.service';
 import { StarwarsModule } from './starwars/starwars.module';
 import { DatabaseModule } from './database/database.module';
 import { typeormConfig } from '../ormconfig';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
     StarwarsModule,
     TypeOrmModule.forRoot(typeormConfig),
     DatabaseModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
