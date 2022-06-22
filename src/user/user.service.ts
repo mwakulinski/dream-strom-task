@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/createUser.dto';
@@ -12,9 +12,9 @@ export class UserService {
 
   async createUser(
     createUserDto: CreateUserDto,
-  ): Promise<User | { message: string }> {
+  ): Promise<User | { status: number; message: string }> {
     if (await this.findUserByEmail(createUserDto.email)) {
-      return { message: 'Such an email is already used to register' };
+      throw new HttpException('This email has already been used to login', 409);
     }
     return this.userRepository.save(createUserDto);
   }
