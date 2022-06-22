@@ -10,6 +10,15 @@ export class UserService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
+  async createUser(
+    createUserDto: CreateUserDto,
+  ): Promise<User | { message: string }> {
+    if (await this.findUserByEmail(createUserDto.email)) {
+      return { message: 'Such an email is already used to register' };
+    }
+    return this.userRepository.save(createUserDto);
+  }
+
   private async findUserByEmail(email: string): Promise<User> {
     return this.userRepository.findOne({ where: { email } });
   }
