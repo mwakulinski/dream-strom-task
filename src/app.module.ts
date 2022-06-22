@@ -9,8 +9,8 @@ import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
-    StarwarsModule,
     TypeOrmModule.forRoot(typeormConfig),
+    StarwarsModule,
     DatabaseModule,
     UserModule,
   ],
