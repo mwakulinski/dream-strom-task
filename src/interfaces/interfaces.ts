@@ -1,4 +1,4 @@
-export interface UserTypeAll {
+export interface IUserTypeAll {
   count: number;
   next: string | null;
   previous: string | null;
