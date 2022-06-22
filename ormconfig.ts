@@ -5,6 +5,6 @@ export const typeormConfig: SqliteConnectionOptions = {
   database: 'db',
   synchronize: false,
   entities: ['dist/src/**/*.entity.js'],
-  migrations: ['dist/src/bd/migrations/*.js'],
+  migrations: ['dist/src/database/migrations/*.js'],
   migrationsRun: true,
 };
