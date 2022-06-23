@@ -24,9 +24,24 @@ export interface ICharacter {
   url: string;
 }
 
+export interface IWeather {
+  temp: number;
+  feels_like: number;
+  temp_min: number;
+  temp_max: number;
+  pressure: number;
+  humidity: number;
+  sunrise: number;
+  sunset: number;
+  visibility: number;
+  windSpeed: number;
+  windDeg: number;
+  description: string;
+}
+
 export interface IWeatherResponse {
   coord: Coord;
-  weather: Weather[];
+  weather: WeatherDisplay[];
   base: string;
   main: Main;
   visibility: number;
@@ -66,7 +81,7 @@ export interface Sys {
   sunset: number;
 }
 
-export interface Weather {
+export interface WeatherDisplay {
   id: number;
   main: string;
   description: string;
