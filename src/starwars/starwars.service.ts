@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { ICharacter, IUserTypeAll } from '../interfaces/interfaces';
 
@@ -15,6 +15,12 @@ export class StarwarsService {
       return this.getAllPeople(page, charactersArray);
     }
     return charactersArray;
+  }
+
+  async getFilteredData(queryParams: Partial<ICharacter>) {
+    if (Object.keys(queryParams).length === 0) {
+      throw new HttpException('You must provide at least one query param', 400); //DOTO: change response
+    }
   }
 
   private async getPageOfData(
