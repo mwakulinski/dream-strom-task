@@ -45,5 +45,5 @@ export class Weather implements IWeather {
   description: string;
 
   @Column()
-  time: Date;
+  creationTime: Date;
 }
