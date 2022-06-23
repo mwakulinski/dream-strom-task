@@ -6,6 +6,7 @@ import { StarwarsModule } from './starwars/starwars.module';
 import { DatabaseModule } from './database/database.module';
 import { typeormConfig } from '../ormconfig';
 import { UserModule } from './user/user.module';
+import { WeatherModule } from './weather/weather.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { UserModule } from './user/user.module';
     StarwarsModule,
     DatabaseModule,
     UserModule,
+    WeatherModule,
   ],
   controllers: [AppController],
   providers: [AppService],
