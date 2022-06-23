@@ -25,11 +25,11 @@ export class WeatherService {
     this.logger.log('Weather data has been added to database');
   }
 
-  async saveFilteredData(filteredData: IWeather) {
+  private async saveFilteredData(filteredData: IWeather) {
     this.weatherRepository.save(filteredData);
   }
 
-  async getWeather(q: string, APPID: string) {
+  private async getWeather(q: string, APPID: string) {
     const { data }: { data: IWeatherResponse } = await axios.get(
       'https://api.openweathermap.org/data/2.5/weather',
       {
