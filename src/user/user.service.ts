@@ -18,9 +18,11 @@ export class UserService {
   ) {}
 
   async login(loginUserDto: LoginUserDto) {
-    const user = await this.findUserByEmail(loginUserDto.email);
-    if (await this.validatePassword(loginUserDto.password, user.password)) {
-      return 'Login was successful';
+    const { password, ...emailAndId } = await this.findUserByEmail(
+      loginUserDto.email,
+    );
+    if (await this.validatePassword(loginUserDto.password, password)) {
+      return this.authService.generateJwt(emailAndId);
     }
     throw new UnauthorizedException();
   }
