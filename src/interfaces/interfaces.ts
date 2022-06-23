@@ -25,6 +25,7 @@ export interface ICharacter {
 }
 
 export interface IWeather {
+  name: string;
   temp: number;
   feels_like: number;
   temp_min: number;
