@@ -7,10 +7,12 @@ import { DatabaseModule } from './database/database.module';
 import { typeormConfig } from '../ormconfig';
 import { UserModule } from './user/user.module';
 import { WeatherModule } from './weather/weather.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeormConfig),
+    ScheduleModule.forRoot(),
     StarwarsModule,
     DatabaseModule,
     UserModule,
