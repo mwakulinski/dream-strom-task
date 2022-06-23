@@ -1,9 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
 import { IWeather, IWeatherResponse } from 'src/interfaces/interfaces';
+import { Repository } from 'typeorm';
+import { Weather } from './entity/waether.entity';
 
 @Injectable()
 export class WeatherService {
+  constructor(
+    @InjectRepository(Weather)
+    private readonly weatherRepository: Repository<Weather>,
+  ) {}
   async getWeather(q: string, APPID: string) {
     const { data }: { data: IWeatherResponse } = await axios.get(
       'https://api.openweathermap.org/data/2.5/weather',
