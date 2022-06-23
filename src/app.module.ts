@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 import { WeatherModule } from './weather/weather.module';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ConfigModule } from '@nestjs/config';
     DatabaseModule,
     UserModule,
     WeatherModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
