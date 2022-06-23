@@ -16,6 +16,12 @@ export class WeatherService {
 
   private readonly logger = new Logger(AppService.name);
 
+  async getLastWeatherEntry() {
+    return this.weatherRepository.query(
+      'SELECT * FROM weather ORDER BY id DESC LIMIT 1',
+    );
+  }
+
   // @Cron('* * */1 * * *')
   // async saveWeatherData() {
   //   const weatherData = await this.getWeather('Warsaw', process.env.APPID);
