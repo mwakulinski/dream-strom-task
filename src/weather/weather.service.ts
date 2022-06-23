@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
-import { IWeather, IWeatherResponse } from 'src/interfaces/interfaces';
+import { IWeather, IWeatherResponse } from '../interfaces/interfaces';
+import { FilteredWeatherData } from '../types/types';
 import { Repository } from 'typeorm';
 import { Weather } from './entity/waether.entity';
 
@@ -11,6 +12,15 @@ export class WeatherService {
     @InjectRepository(Weather)
     private readonly weatherRepository: Repository<Weather>,
   ) {}
+
+  async saveFilteredData(
+    dataToFilter: IWeatherResponse,
+    filteringMethod: (dataToFilter: IWeatherResponse) => FilteredWeatherData,
+  ) {
+    const filteredData = filteringMethod(dataToFilter);
+    this.weatherRepository.save(filteredData);
+  }
+
   async getWeather(q: string, APPID: string) {
     const { data }: { data: IWeatherResponse } = await axios.get(
       'https://api.openweathermap.org/data/2.5/weather',
@@ -18,7 +28,7 @@ export class WeatherService {
         params: { q, APPID },
       },
     );
-    return this.filterWeatherData(data);
+    return data;
   }
 
   private filterWeatherData(dataToFilter: IWeatherResponse) {
