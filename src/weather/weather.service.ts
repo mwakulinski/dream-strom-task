@@ -2,11 +2,10 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import axios from 'axios';
 import { IWeather, IWeatherResponse } from '../interfaces/interfaces';
-import { FilteredWeatherData } from '../types/types';
 import { Repository } from 'typeorm';
 import { Weather } from './entity/waether.entity';
-import { Cron, CronExpression } from '@nestjs/schedule';
-import { AppService } from 'src/app.service';
+import { Cron } from '@nestjs/schedule';
+import { AppService } from '../app.service';
 
 @Injectable()
 export class WeatherService {
@@ -17,13 +16,13 @@ export class WeatherService {
 
   private readonly logger = new Logger(AppService.name);
 
-  @Cron('* * */1 * * *')
-  async saveWeatherData() {
-    const weatherData = await this.getWeather('Warsaw', process.env.APPID);
-    const filteredData = this.filterWeatherData(weatherData);
-    await this.saveFilteredData(filteredData);
-    this.logger.log('Weather data has been added to database');
-  }
+  // @Cron('* * */1 * * *')
+  // async saveWeatherData() {
+  //   const weatherData = await this.getWeather('Warsaw', process.env.APPID);
+  //   const filteredData = this.filterWeatherData(weatherData);
+  //   await this.saveFilteredData(filteredData);
+  //   this.logger.log('Weather data has been added to database');
+  // }
 
   private async saveFilteredData(filteredData: IWeather) {
     this.weatherRepository.save(filteredData);

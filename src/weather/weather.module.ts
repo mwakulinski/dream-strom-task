@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Weather } from './entity/waether.entity';
 import { WeatherController } from './weather.controller';
 import { WeatherService } from './weather.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Weather])],
+  imports: [ConfigModule, TypeOrmModule.forFeature([Weather])],
   controllers: [WeatherController],
   providers: [WeatherService],
 })

@@ -8,9 +8,11 @@ import { typeormConfig } from '../ormconfig';
 import { UserModule } from './user/user.module';
 import { WeatherModule } from './weather/weather.module';
 import { ScheduleModule } from '@nestjs/schedule';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot(typeormConfig),
     ScheduleModule.forRoot(),
     StarwarsModule,
