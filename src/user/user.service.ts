@@ -12,13 +12,17 @@ export class UserService {
     private readonly authService: AuthService,
   ) {}
 
-  async createUser(
-    createUserDto: CreateUserDto,
-  ): Promise<User | { status: number; message: string }> {
+  async createUser(createUserDto: CreateUserDto) {
     if (await this.findUserByEmail(createUserDto.email)) {
       throw new HttpException('This email has already been used to login', 409);
     }
-    return this.userRepository.save(createUserDto);
+    createUserDto.password = await this.authService.hashPassword(
+      createUserDto.password,
+    );
+    const { password, ...emailAndId } = await this.userRepository.save(
+      createUserDto,
+    );
+    return emailAndId;
   }
 
   private async validatePassword(
