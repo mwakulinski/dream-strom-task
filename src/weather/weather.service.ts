@@ -5,6 +5,7 @@ import { IWeather, IWeatherResponse } from '../interfaces/interfaces';
 import { FilteredWeatherData } from '../types/types';
 import { Repository } from 'typeorm';
 import { Weather } from './entity/waether.entity';
+import { Cron, CronExpression } from '@nestjs/schedule';
 
 @Injectable()
 export class WeatherService {
@@ -13,11 +14,7 @@ export class WeatherService {
     private readonly weatherRepository: Repository<Weather>,
   ) {}
 
-  async saveFilteredData(
-    dataToFilter: IWeatherResponse,
-    filteringMethod: (dataToFilter: IWeatherResponse) => FilteredWeatherData,
-  ) {
-    const filteredData = filteringMethod(dataToFilter);
+  async saveFilteredData(filteredData: IWeather) {
     this.weatherRepository.save(filteredData);
   }
 
