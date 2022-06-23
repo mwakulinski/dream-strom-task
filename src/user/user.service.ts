@@ -1,9 +1,14 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AuthService } from '../auth/auth.service';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/createUser.dto';
 import { User } from './entity/user.entity';
+import { LoginUserDto } from './dto/loginUser.dto';
 
 @Injectable()
 export class UserService {
@@ -11,6 +16,14 @@ export class UserService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly authService: AuthService,
   ) {}
+
+  async login(loginUserDto: LoginUserDto) {
+    const user = await this.findUserByEmail(loginUserDto.email);
+    if (await this.validatePassword(loginUserDto.password, user.password)) {
+      return 'Login was successful';
+    }
+    throw new UnauthorizedException();
+  }
 
   async createUser(createUserDto: CreateUserDto) {
     if (await this.findUserByEmail(createUserDto.email)) {
