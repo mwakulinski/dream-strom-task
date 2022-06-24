@@ -6,7 +6,7 @@ import { CreateFilterDto } from './dto/filters.dto';
 @Injectable()
 export class StarwarsService {
   async getAllPeople(
-    page: number = 1,
+    page = 1,
     charactersArray: ICharacter[] = [],
   ): Promise<ICharacter[]> {
     const data = await this.getPageOfData('people', page);
@@ -20,7 +20,7 @@ export class StarwarsService {
 
   async getFilteredCharacters(
     filters: CreateFilterDto,
-    page: number = 1,
+    page = 1,
     charactersArray: ICharacter[] = [],
   ) {
     if (Object.keys(filters).length === 0) {
@@ -48,7 +48,7 @@ export class StarwarsService {
       dataToFilter: ICharacter[],
       filter: CreateFilterDto,
     ) => ICharacter[],
-    page: number = 1,
+    page = 1,
   ) {
     const pageOfData = await getPageOfData('people', page);
     pageOfData.results = filterData(pageOfData.results, filter);

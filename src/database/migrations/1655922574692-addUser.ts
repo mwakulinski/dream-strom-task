@@ -1,4 +1,3 @@
-import { identity } from 'rxjs';
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
 
 export class addUser1655922574692 implements MigrationInterface {

@@ -4,6 +4,6 @@ import { StarwarsService } from './starwars.service';
 
 @Module({
   controllers: [StarwarsController],
-  providers: [StarwarsService]
+  providers: [StarwarsService],
 })
 export class StarwarsModule {}
