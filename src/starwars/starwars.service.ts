@@ -17,6 +17,29 @@ export class StarwarsService {
     return charactersArray;
   }
 
+  async getFilteredCharacters(
+    body: Partial<ICharacter>,
+    page: number = 1,
+    charactersArray: ICharacter[] = [],
+  ) {
+    if (Object.keys(body).length === 0) {
+      throw new HttpException('You must provide at least one query param', 400); //DOTO: change response
+    }
+
+    const data = await this.getFilteredPageOfData(
+      body,
+      this.getPageOfData,
+      this.filterCharacters,
+      page,
+    );
+    charactersArray.push(...data.results);
+    if (data.next !== null) {
+      page += 1;
+      return this.getFilteredCharacters(body, page, charactersArray);
+    }
+    return charactersArray;
+  }
+
   private async getFilteredPageOfData(
     filter: Partial<ICharacter>,
     getPageOfData: (urlParam: string, page: number) => Promise<IUserTypeAll>,

@@ -1,17 +1,17 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ICharacter, IUserTypeAll } from '../interfaces/interfaces';
 import { StarwarsService } from './starwars.service';
 
 @Controller('starwars')
 export class StarwarsController {
-  constructor(private readonly starwatsService: StarwarsService) {}
+  constructor(private readonly starwarsService: StarwarsService) {}
   @Get()
   async getAllPeople() {
-    return this.starwatsService.getAllPeople();
+    return this.starwarsService.getAllPeople();
   }
 
-  @Get('/getfiltered')
-  async getFilteredPeople(@Query() queryParams: Partial<ICharacter>) {
-    return this.starwatsService.getFilteredData(queryParams);
+  @Post('/getfiltered')
+  async getFilteredCharacters(@Body() body: Partial<ICharacter>) {
+    return this.starwarsService.getFilteredCharacters(body);
   }
 }
