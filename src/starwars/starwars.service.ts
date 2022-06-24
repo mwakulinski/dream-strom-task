@@ -17,10 +17,22 @@ export class StarwarsService {
     return charactersArray;
   }
 
-  async getFilteredData(queryParams: Partial<ICharacter>) {
-    if (Object.keys(queryParams).length === 0) {
-      throw new HttpException('You must provide at least one query param', 400); //DOTO: change response
-    }
+  private filterCharacters(
+    charactersToFilter: ICharacter[],
+    filters: Partial<ICharacter>,
+  ): ICharacter[] {
+    return charactersToFilter.filter((character) => {
+      return Object.keys(filters).every((key) => {
+        if (Array.isArray(filters[key])) {
+          return filters[key].every((filterValue) => {
+            return character[key].some(
+              (characterValue) => characterValue === filterValue,
+            );
+          });
+        }
+        return filters[key] === character[key];
+      });
+    });
   }
 
   private async getPageOfData(
