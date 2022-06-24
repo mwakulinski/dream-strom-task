@@ -1,6 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import axios from 'axios';
 import { ICharacter, IUserTypeAll } from '../interfaces/interfaces';
+import { CreateFilterDto } from './dto/filters.dto';
 
 @Injectable()
 export class StarwarsService {
@@ -18,16 +19,16 @@ export class StarwarsService {
   }
 
   async getFilteredCharacters(
-    body: Partial<ICharacter>,
+    filters: CreateFilterDto,
     page: number = 1,
     charactersArray: ICharacter[] = [],
   ) {
-    if (Object.keys(body).length === 0) {
+    if (Object.keys(filters).length === 0) {
       throw new HttpException('You must provide at least one query param', 400); //DOTO: change response
     }
 
     const data = await this.getFilteredPageOfData(
-      body,
+      filters,
       this.getPageOfData,
       this.filterCharacters,
       page,
@@ -35,17 +36,17 @@ export class StarwarsService {
     charactersArray.push(...data.results);
     if (data.next !== null) {
       page += 1;
-      return this.getFilteredCharacters(body, page, charactersArray);
+      return this.getFilteredCharacters(filters, page, charactersArray);
     }
     return charactersArray;
   }
 
   private async getFilteredPageOfData(
-    filter: Partial<ICharacter>,
+    filter: CreateFilterDto,
     getPageOfData: (urlParam: string, page: number) => Promise<IUserTypeAll>,
     filterData: (
       dataToFilter: ICharacter[],
-      filter: Partial<ICharacter>,
+      filter: CreateFilterDto,
     ) => ICharacter[],
     page: number = 1,
   ) {
@@ -56,7 +57,7 @@ export class StarwarsService {
 
   private filterCharacters(
     charactersToFilter: ICharacter[],
-    filters: Partial<ICharacter>,
+    filters: CreateFilterDto,
   ): ICharacter[] {
     return charactersToFilter.filter((character) => {
       return Object.keys(filters).every((key) => {

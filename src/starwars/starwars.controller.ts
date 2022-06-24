@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ICharacter, IUserTypeAll } from '../interfaces/interfaces';
+import { CreateFilterDto } from './dto/filters.dto';
 import { StarwarsService } from './starwars.service';
 
 @Controller('starwars')
@@ -11,7 +12,7 @@ export class StarwarsController {
   }
 
   @Post('/getfiltered')
-  async getFilteredCharacters(@Body() body: Partial<ICharacter>) {
-    return this.starwarsService.getFilteredCharacters(body);
+  async getFilteredCharacters(@Body() filters: CreateFilterDto) {
+    return this.starwarsService.getFilteredCharacters(filters);
   }
 }
