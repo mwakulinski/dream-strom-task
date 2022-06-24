@@ -17,6 +17,20 @@ export class StarwarsService {
     return charactersArray;
   }
 
+  private async getFilteredPageOfData(
+    filter: Partial<ICharacter>,
+    getPageOfData: (urlParam: string, page: number) => Promise<IUserTypeAll>,
+    filterData: (
+      dataToFilter: ICharacter[],
+      filter: Partial<ICharacter>,
+    ) => ICharacter[],
+    page: number = 1,
+  ) {
+    const pageOfData = await getPageOfData('people', page);
+    pageOfData.results = filterData(pageOfData.results, filter);
+    return pageOfData;
+  }
+
   private filterCharacters(
     charactersToFilter: ICharacter[],
     filters: Partial<ICharacter>,
