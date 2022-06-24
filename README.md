@@ -6,9 +6,9 @@ $ npm install
 
 ## .env
 
-Before running the app you have to:
+Before running the app you should:
 
-1. create .env file in a root folder;
+1. create .env file in the root folder;
 2. sample document is provided as ".env_sample" (it contains SECRET, which normally would be hidden);
 3. sign in to https://openweathermap.org/ -> you will get your own private key;
 4. pass your private kye as APPID.
@@ -28,4 +28,4 @@ $ npm run start:prod
 
 ## Database
 
-To make things easier I used sqlite3, database file is in root folder and is called 'db'
+To make things easier I used sqlite3, database file is in the root folder and is called 'db'
