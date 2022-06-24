@@ -22,13 +22,13 @@ export class WeatherService {
     );
   }
 
-  // @Cron('* * */1 * * *')
-  // async saveWeatherData() {
-  //   const weatherData = await this.getWeather('Warsaw', process.env.APPID);
-  //   const filteredData = this.filterWeatherData(weatherData);
-  //   await this.saveFilteredData(filteredData);
-  //   this.logger.log('Weather data has been added to database');
-  // }
+  @Cron('0 * * * *')
+  async saveWeatherData() {
+    const weatherData = await this.getWeather('Warsaw', process.env.APPID);
+    const filteredData = this.filterWeatherData(weatherData);
+    await this.saveFilteredData(filteredData);
+    this.logger.log('Weather data has been added to database');
+  }
 
   private async saveFilteredData(filteredData: IWeather) {
     this.weatherRepository.save(filteredData);

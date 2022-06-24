@@ -24,7 +24,7 @@ export class StarwarsService {
     charactersArray: ICharacter[] = [],
   ) {
     if (Object.keys(filters).length === 0) {
-      throw new HttpException('You must provide at least one query param', 400); //DOTO: change response
+      throw new HttpException('You must provide at least one query param', 400);
     }
 
     const data = await this.getFilteredPageOfData(
