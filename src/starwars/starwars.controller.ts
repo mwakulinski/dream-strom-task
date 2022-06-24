@@ -1,5 +1,5 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { ICharacter, IUserTypeAll } from '../interfaces/interfaces';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateFilterDto } from './dto/filters.dto';
 import { StarwarsService } from './starwars.service';
 
@@ -11,6 +11,7 @@ export class StarwarsController {
     return this.starwarsService.getAllPeople();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('/getfiltered')
   async getFilteredCharacters(@Body() filters: CreateFilterDto) {
     return this.starwarsService.getFilteredCharacters(filters);
